@@ -1,16 +1,25 @@
 package com.util.http;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,6 +76,9 @@ public class HttpUtils {
             if (httpResponse.getStatusLine().getStatusCode() == SUCCESS) {
                 result = EntityUtils.toString(httpResponse.getEntity(), ENCODING);
             }
+            if(httpResponse != null){
+                httpResponse.close();
+            }
             return result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -103,6 +115,9 @@ public class HttpUtils {
             if (httpResponse.getStatusLine().getStatusCode() == SUCCESS) {
                 result = EntityUtils.toString(httpResponse.getEntity(), ENCODING);
             }
+            if(httpResponse != null){
+                httpResponse.close();
+            }
             return result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -110,9 +125,45 @@ public class HttpUtils {
         }
     }
 
+    public static String uploadFile(String filePath, String url) {
+        String result = null;
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
+            CloseableHttpResponse httpResponse = null;
+            File localFile = new File(filePath);
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.setConfig(requestConfig);
+            MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
+            //multipartEntityBuilder.addBinaryBody("file", file,ContentType.create("image/png"),"abc.pdf");
+            //当设置了setSocketTimeout参数后，以下代码上传PDF不能成功，将setSocketTimeout参数去掉后此可以上传成功。上传图片则没有个限制
+            //multipartEntityBuilder.addBinaryBody("file",file,ContentType.create("application/octet-stream"),"abd.pdf");
+            multipartEntityBuilder.addBinaryBody("file", localFile);
+            multipartEntityBuilder.addPart("comment", new StringBody("This is comment", ContentType.TEXT_PLAIN));
+            multipartEntityBuilder.addTextBody("comment", "this is comment");
+            HttpEntity httpEntity = multipartEntityBuilder.build();
+            httpPost.setEntity(httpEntity);
+
+            httpResponse = httpClient.execute(httpPost);
+            if (httpResponse.getStatusLine().getStatusCode() == SUCCESS) {
+                result = EntityUtils.toString(httpResponse.getEntity(), ENCODING);
+            }
+            if(httpResponse != null){
+                httpResponse.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
-        getTest();
-        postTest();
+//        getTest();
+//        postTest();
+        uploadTest();
+    }
+
+    public static void uploadTest() {
+        String result = uploadFile("C:/Users/admin/Desktop/doc/Java_manual.pdf","http://localhost:8080/upload");
+        System.out.println(result);
     }
 
     public static void getTest() {
