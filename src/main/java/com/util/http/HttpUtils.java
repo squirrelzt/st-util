@@ -1,7 +1,7 @@
 package com.util.http;
 
 import com.alibaba.fastjson.JSON;
-import org.apache.http.HttpEntity;
+import org.apache.http.*;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -16,10 +16,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +42,7 @@ public class HttpUtils {
      * @param url 请求地址
      * @return 响应结果, 在发生异常时将返回一个空对象.
      */
-    public static String sendByPost(Map<String, String> headerParam, Map<String, String> bodyParam, String url) {
+    private static String sendByPost(Map<String, String> headerParam, Map<String, String> bodyParam, String url) {
         String body = null;
         if (bodyParam != null) {
             body = JSON.toJSONString(bodyParam);
@@ -76,9 +73,6 @@ public class HttpUtils {
             if (httpResponse.getStatusLine().getStatusCode() == SUCCESS) {
                 result = EntityUtils.toString(httpResponse.getEntity(), ENCODING);
             }
-            if(httpResponse != null){
-                httpResponse.close();
-            }
             return result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,7 +88,7 @@ public class HttpUtils {
      * @param url 请求地址
      * @return 响应结果, 在发生异常时将返回一个空对象.
      */
-    public static String sendByGet(Map<String, String> headerParam, Map<String, String> bodyParam, String url) {
+    private static String sendByGet(Map<String, String> headerParam, Map<String, String> bodyParam, String url) {
         String result = null;
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             URIBuilder uriBuilder = new URIBuilder(url);
@@ -115,9 +109,6 @@ public class HttpUtils {
             if (httpResponse.getStatusLine().getStatusCode() == SUCCESS) {
                 result = EntityUtils.toString(httpResponse.getEntity(), ENCODING);
             }
-            if(httpResponse != null){
-                httpResponse.close();
-            }
             return result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -125,10 +116,16 @@ public class HttpUtils {
         }
     }
 
-    public static String uploadFile(String filePath, String url) {
+    /**
+     * httpClient上传文件
+     * @param filePath 文件路径
+     * @param url 上传地址
+     * @return 返回值
+     */
+    private static String uploadFile(String filePath, String url) {
         String result = null;
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
-            CloseableHttpResponse httpResponse = null;
+            CloseableHttpResponse httpResponse;
             File localFile = new File(filePath);
             HttpPost httpPost = new HttpPost(url);
             httpPost.setConfig(requestConfig);
@@ -146,21 +143,73 @@ public class HttpUtils {
             if (httpResponse.getStatusLine().getStatusCode() == SUCCESS) {
                 result = EntityUtils.toString(httpResponse.getEntity(), ENCODING);
             }
-            if(httpResponse != null){
-                httpResponse.close();
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return result;
     }
 
+    /**
+     * 下载文件
+     * @param url 下载地址
+     * @param destFilePath 下载的文件本地存放路径
+     */
+    private static void downloadFile(String url, String destFilePath) {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpGet httpGet = new HttpGet(url);
+            HttpResponse httpResponse = httpClient.execute(httpGet);
+            String filename = getFileName(httpResponse);
+            HttpEntity httpEntity = httpResponse.getEntity();
+            File file = new File(destFilePath + File.separator + filename);
+            try (InputStream inputStream = httpEntity.getContent(); OutputStream outputStream = new FileOutputStream(file)) {
+                int length;
+                byte[] bytes = new byte[1024];
+                while ((length = inputStream.read(bytes)) != -1) {
+                    outputStream.write(bytes, 0, length);
+                }
+                outputStream.flush();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 获取下载文件名
+     * @param response {@link HttpResponse}
+     * @return 文件名
+     */
+    private static String getFileName(HttpResponse response) {
+        Header contentHeader = response.getFirstHeader("Content-Disposition");
+        String filename = null;
+        if (contentHeader != null) {
+            HeaderElement[] values = contentHeader.getElements();
+            if (values.length == 1) {
+                NameValuePair param = values[0].getParameterByName("filename");
+                if (param != null) {
+                    try {
+                        filename = param.getValue();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return filename;
+    }
+
     public static void main(String[] args) {
 //        getTest();
 //        postTest();
-        uploadTest();
+//        uploadTest();
+        downloadTest();
     }
 
+    private static void downloadTest() {
+        String url = "http://localhost:8080/download/file";
+        String filePath = "C:/Users/admin/Desktop/doc/server";
+        downloadFile(url, filePath);
+    }
     public static void uploadTest() {
         String result = uploadFile("C:/Users/admin/Desktop/doc/Java_manual.pdf","http://localhost:8080/upload");
         System.out.println(result);
