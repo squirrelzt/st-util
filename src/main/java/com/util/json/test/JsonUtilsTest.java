@@ -43,12 +43,27 @@ public class JsonUtilsTest {
         System.out.println(person);
     }
 
+    public static void json2ObjectTest() throws Exception {
+        String jsonStr = "{\"name\":\"tom\",\"age\":\"22\"}";
+        Map map = JsonUtils.json2Object(jsonStr, Map.class);
+        System.out.println(map);
+    }
+
+    public static void msp2JsonTest() {
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("name", "tome");
+        map.put("age", 30);
+        String jsonStr = JsonUtils.map2Json(map);
+        System.out.println(jsonStr);
+    }
 
     public static void main(String[] args) throws Exception {
-        JsonUtilsTest.obj2jsonTest();
-        JsonUtilsTest.json2pojo();
-        JsonUtilsTest.json2map();
-        JsonUtilsTest.map2pojoTest();
-        JsonUtilsTest.json2list();
+        obj2jsonTest();
+        json2pojo();
+        json2map();
+        map2pojoTest();
+        json2list();
+        json2ObjectTest();
+        msp2JsonTest();
     }
 }

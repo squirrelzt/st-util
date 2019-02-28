@@ -1,12 +1,11 @@
 package com.util.json;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * 类名称: JsonUtils
@@ -84,5 +83,30 @@ public class JsonUtils {
      */
     public static <T> T map2pojo(Map map, Class<T> clazz) {
         return objectMapper.convertValue(map, clazz);
+    }
+
+    /**
+     * json字符串转Object
+     * @param jsonStr json字符串
+     * @param clazz 转换类型
+     * @param <T> 转换类型
+     * @return 转换类型
+     * @throws IOException
+     */
+    public static <T> T json2Object(String jsonStr, Class<T> clazz) throws IOException {
+        return objectMapper.readValue(jsonStr, clazz);
+    }
+
+    /**
+     * Map转json字符串
+     * @param map {@link Map}
+     * @return json字符串
+     */
+    public static String map2Json(Map<String, Object> map) {
+        JSONObject jsonobj = new JSONObject();
+        for (Map.Entry<String, Object> entry: map.entrySet()) {
+            jsonobj.put(entry.getKey(), entry.getValue());
+        }
+        return jsonobj.toString();
     }
 }
