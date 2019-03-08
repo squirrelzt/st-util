@@ -1,15 +1,14 @@
 package com.util.apache.commons.bean;
 
-import org.apache.commons.beanutils.BasicDynaBean;
 import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.Converter;
-import org.apache.commons.beanutils.converters.ClassConverter;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 public class MyBeanUtils {
+
+    private MyBeanUtils(){}
 
     public static void test() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Person person = new Person();

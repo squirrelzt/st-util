@@ -17,6 +17,8 @@ import java.util.*;
  */
 public class JsonUtils {
 
+    private JsonUtils(){}
+
     private static ObjectMapper objectMapper = new ObjectMapper();
 
     /**

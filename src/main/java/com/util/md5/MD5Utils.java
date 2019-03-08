@@ -13,6 +13,8 @@ import java.security.NoSuchAlgorithmException;
  */
 public class MD5Utils {
 
+    private MD5Utils(){}
+
     /**
      *
      * @param plainText

@@ -14,7 +14,16 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.HashMap;
 
+/**
+ * 类名称: GoogleQRCodeUtils
+ * 类描述: 谷歌控件生成二维码工具类
+ * @author squirrel
+ * @date 2019-03-08
+ */
 public class GoogleQRCodeUtils {
+
+    private GoogleQRCodeUtils(){}
+
     private static final int width = 600;
     private static final int height = 600;
 

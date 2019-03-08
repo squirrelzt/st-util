@@ -28,6 +28,9 @@ import java.util.Map;
  * @date 2019-02-20
  */
 public class HttpUtils {
+
+    private HttpUtils(){}
+
     private static final String JSON_UTF8_MIME_TYPE = "application/json;charset=utf-8";
     private static final int SUCCESS = 200;
     private static final String ENCODING = "UTF-8";

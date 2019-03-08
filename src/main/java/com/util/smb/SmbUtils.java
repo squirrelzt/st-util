@@ -7,7 +7,16 @@ import jcifs.smb.SmbFileOutputStream;
 
 import java.io.*;
 
+/**
+ * 类名称: SmbUtils
+ * 类描述: Smb远程操作文件
+ * @author squirrel
+ * @date 2019-03-08
+ */
 public class SmbUtils {
+
+    private SmbUtils(){}
+
     /**
      * 从共享目录拷贝文件到本地
      * @param domainip 共享文件所在机器IP

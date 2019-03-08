@@ -18,6 +18,8 @@ import java.io.IOException;
  */
 public class QRCodeUtils {
 
+    private QRCodeUtils(){}
+
     /**
      * 生成二维码
      * @param qrData 生成二维码中要存储的信息
