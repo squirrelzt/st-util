@@ -1,6 +1,8 @@
 package com.util.json;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.Feature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -108,5 +110,19 @@ public class JsonUtils {
             jsonobj.put(entry.getKey(), entry.getValue());
         }
         return jsonobj.toString();
+    }
+
+    /**
+     * json字符串排序
+     * @param json 字符串
+     * @return 排序号json字符串
+     */
+    public static String orderJson(String json) {
+        Map<String, Object> jsonMap = JSON.parseObject(json, TreeMap.class, Feature.OrderedField);
+        Map<String, Object> orderMap = new TreeMap<>();
+        for (Map.Entry<String, Object> entry : jsonMap.entrySet()) {
+            orderMap.put(entry.getKey(), entry.getValue());
+        }
+        return JSON.toJSONString(orderMap);
     }
 }

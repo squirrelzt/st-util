@@ -57,6 +57,11 @@ public class JsonUtilsTest {
         System.out.println(jsonStr);
     }
 
+    public static void orderJsonTest() {
+        String json = "{\"instReprName\":\"tom\",\"businessLife\":\"businessLife\",\"contacts\":\"tom\"}";
+        String orderJson = JsonUtils.orderJson(json);
+        System.out.println(orderJson);
+    }
     public static void main(String[] args) throws Exception {
         obj2jsonTest();
         json2pojo();
@@ -65,5 +70,6 @@ public class JsonUtilsTest {
         json2list();
         json2ObjectTest();
         msp2JsonTest();
+        orderJsonTest();
     }
 }
