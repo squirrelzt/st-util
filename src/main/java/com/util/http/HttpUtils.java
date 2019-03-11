@@ -36,6 +36,7 @@ public class HttpUtils {
     private static final String ENCODING = "UTF-8";
     private static RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(2000).setConnectTimeout(2000).build();
     private static final String HEADER_ACCEPT = "application/json";
+    private static final String HEADER_ACCEPT_ENCODING = "*";
 
     /**
      * HttpPost请求工具方法
@@ -58,6 +59,8 @@ public class HttpUtils {
             httpPost.setConfig(requestConfig);
             httpPost.setHeader("Content-type", JSON_UTF8_MIME_TYPE);
             httpPost.setHeader("Accept", HEADER_ACCEPT);
+            // accept-encoding不设置默认值是gzip,deflate,返回值过长会压缩
+            httpPost.setHeader("accept-encoding", HEADER_ACCEPT_ENCODING);
             if (headerParam != null) {
                 // 为HttpPost设置Header参数
                 for (Map.Entry<String, String> entry : headerParam.entrySet()) {
