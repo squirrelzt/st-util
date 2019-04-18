@@ -259,21 +259,6 @@ public class SignUtils {
         boolean checkMapSignType = SignUtils.rsaCheck(signMapSignType, publicKey, "utf-8", "RSA");
         System.out.println("checkMapSignType" + "\t" + checkMapSignType);
 
-        Map<String, String> signMapV2 = new HashMap<>(3);
-        signMapV2.put("sign", signContent);
-        signMapV2.put("acctNum", "1234567890");
-        signMapV2.put("acctName", "太阳系银行");
-        boolean checkMapV2 = SignUtils.rsaCheck(signMapV2, publicKey, "utf-8");
-        System.out.println("checkMap" + "\t" + checkMapV2);
-
-        Map<String, String> signMapSignTypeV2 = new HashMap<>(3);
-        signMapSignTypeV2.put("sign", signContent);
-        signMapSignTypeV2.put("acctNum", "1234567890");
-        signMapSignTypeV2.put("acctName", "太阳系银行");
-        signMapSignTypeV2.put("signType", "RSA");
-        boolean checkMapSignTypeV2 = SignUtils.rsaCheck(signMapSignTypeV2, publicKey, "utf-8", "RSA");
-        System.out.println("checkMapSignType" + "\t" + checkMapSignTypeV2);
-
         boolean check = SignUtils.rsaCheck(content, signContent, publicKey, "utf-8", "RSA");
         System.out.println("check" + "\t" + check);
     }
