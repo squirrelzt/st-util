@@ -1,6 +1,7 @@
 package com.util.json.test;
 
 import com.util.json.JsonUtils;
+import com.util.json.test.JsonDomain.Person;
 
 import java.util.HashMap;
 import java.util.List;
