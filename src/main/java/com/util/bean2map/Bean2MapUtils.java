@@ -10,11 +10,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Bean2MapUtils {
     public static void main(String[] args) throws Exception {
         JsonDomain.Person person = new JsonDomain.Person();
-        person.setName("tom");
+        person.setName(null);
         person.setAge(20);
         Map<String, String> map = objectToMap(person);
         System.out.println(map);
@@ -30,7 +31,8 @@ public class Bean2MapUtils {
                 continue;
             }
             Method getter = property.getReadMethod();
-            String value = getter != null ? getter.invoke(obj).toString() : null;
+
+            String value = getter != null ? (Objects.isNull(getter.invoke(obj))? null: getter.invoke(obj).toString()) : null;
 
             map.put(key, value);
         }
