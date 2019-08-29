@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class TimestampUsage {
     public static void main(String[] args) throws ParseException {
-        String time = "2019-01-01 10:01:30";
+        String time = "2019-08-01 00:00:00";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = sdf.parse(time);
         long timestamp = date.getTime();
