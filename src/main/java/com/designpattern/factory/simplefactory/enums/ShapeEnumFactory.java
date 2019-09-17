@@ -1,16 +1,15 @@
-package com.designpattern.singleton.enums;
+package com.designpattern.factory.simplefactory.enums;
 
 import lombok.Getter;
 
 /**
- * 类名称: ShapeFactoryEnum
- * 类描述: 枚举实现工厂模式
+ * 类名称: ShapeEnumFactory
+ * 类描述: 枚举实现简单工厂模式
  * @author squirrel
  * @date 2019-09-17
  */
 @Getter
-public enum ShapeFactoryEnum {
-
+public enum ShapeEnumFactory {
     /**
      * 圆形
      */
@@ -36,13 +35,13 @@ public enum ShapeFactoryEnum {
      */
     private String name;
 
-    private ShapeFactoryEnum(Shape shape, String name) {
+    private ShapeEnumFactory(Shape shape, String name) {
         this.shape = shape;
         this.name = name;
     }
 
     public static Shape getShape(String name) {
-        for (ShapeFactoryEnum c : ShapeFactoryEnum.values()) {
+        for (ShapeEnumFactory c : ShapeEnumFactory.values()) {
             if (c.name == name) {
                 return c.shape;
             }

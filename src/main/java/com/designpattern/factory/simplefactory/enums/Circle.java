@@ -1,4 +1,4 @@
-package com.designpattern.singleton.enums;
+package com.designpattern.factory.simplefactory.enums;
 
 /**
  * 类名称: Circle
