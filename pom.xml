@@ -70,17 +70,18 @@
         </dependency>
         <!-- 二维码 -->
         <!-- https://mvnrepository.com/artifact/QRCode/QRCode_swetake -->
-        <dependency>
-            <groupId>QRCode</groupId>
-            <artifactId>QRCode_swetake</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/QRCode/QRCode -->
-        <dependency>
-            <groupId>QRCode</groupId>
-            <artifactId>QRCode</artifactId>
-            <version>3.0.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>QRCode</groupId>-->
+<!--            <artifactId>QRCode_swetake</artifactId>-->
+<!--            <version>3.0.0</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/QRCode/QRCode &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>QRCode</groupId>-->
+<!--            <artifactId>QRCode</artifactId>-->
+<!--            <version>3.0</version>-->
+<!--        </dependency>-->
         <!-- 谷歌控件生成二维码 -->
         <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
         <dependency>

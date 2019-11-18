@@ -2,13 +2,14 @@ package com.util.encrypt;
 
 import com.alibaba.fastjson.JSON;
 import com.util.json.test.Person;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+//import sun.misc.BASE64Decoder;
+//import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.SignatureException;
+import java.util.Base64;
 
 /**
  * 类名称: EncryptUtils
@@ -48,7 +49,8 @@ public class EncryptUtils {
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
             byte[] encrypted = cipher.doFinal(content.getBytes(CHARSET));
             // 此处使用BASE64做转码
-            String encrypt =  new BASE64Encoder().encode(encrypted);
+//            String encrypt =  new BASE64Encoder().encode(encrypted);
+            String encrypt =  Base64.getEncoder().encode(encrypted).toString();
             return encrypt.replaceAll("[\\s*\t\n\r]", "");
         }catch (Exception ex){
             throw new SignatureException(ex);
@@ -70,7 +72,8 @@ public class EncryptUtils {
             IvParameterSpec iv = new IvParameterSpec(AES_IV.getBytes());
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
             // 先用base64解密
-            byte[] encrypted1 = new BASE64Decoder().decodeBuffer(content);
+//            byte[] encrypted1 = new BASE64Decoder().decodeBuffer(content);
+            byte[] encrypted1 = Base64.getDecoder().decode(content);
             byte[] original = cipher.doFinal(encrypted1);
             return new String(original, CHARSET);
         } catch (Exception ex) {
