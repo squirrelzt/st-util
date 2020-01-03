@@ -25,6 +25,7 @@ public class HeapSort {
         data[j] = temp;
     }
 
+    //对data数组从0到lastIndex建大顶堆
     private static void buildMaxHeap(int[] data, int lastIndex) {
         //从lastIndex处节点（最后一个节点）的父节点开始
         for (int i = (lastIndex -1)/2; i >= 0; i--) {
