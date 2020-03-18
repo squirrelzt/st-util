@@ -1,15 +1,12 @@
 package com.useage.jdk8.filter;
 
-import com.useage.jdk8.stream.Customer;
 import com.useage.jdk8.stream.Order;
 import com.useage.jdk8.stream.OrderItem;
-import sun.jvm.hotspot.utilities.Assert;
 
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.LongAdder;
 
-import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.*;
 
