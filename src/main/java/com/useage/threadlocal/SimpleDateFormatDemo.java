@@ -1,8 +1,6 @@
 package com.useage.threadlocal;
 
 import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -33,7 +31,7 @@ public class SimpleDateFormatDemo {
             System.out.println(Thread.currentThread().getName() + " 当前时间: "+ dateFormatDemo.getDateFormat().format(new Date()));
         }
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         SimpleDateFormatDemo dateFormatDemo = new SimpleDateFormatDemo();
 
         MyRunnable myRunnable1 = new MyRunnable(dateFormatDemo);
@@ -45,7 +43,9 @@ public class SimpleDateFormatDemo {
         Thread thread3 = new Thread(myRunnable3);
 
         thread1.start();
+        Thread.sleep(1000);
         thread2.start();
+        Thread.sleep(1000);
         thread3.start();
     }
 }
